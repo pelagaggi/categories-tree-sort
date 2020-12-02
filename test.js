@@ -43,8 +43,8 @@ describe('# Sort Categories For Insert', function () {
     let Expected_Result = [
       { name: "A",id: 27, parent_id: null },
       { name: "B",id: 14, parent_id: 27 },
-      { name: "C",id: 10, parent_id: 14 },
       { name: "D",id: 11, parent_id: 14 },
+      { name: "C",id: 10, parent_id: 14 },
       { name: "E",id: 35, parent_id: 27 },
       { name: "F",id: 31, parent_id: 35 },
       { name: "G",id: 42, parent_id: 35 }];
