@@ -9,6 +9,7 @@ class Node {
 
 function OrderNodes(inputs){
     inputs.forEach(input=>{
+        if(IndexedNodes[input.id]!==undefined && IndexedNodes[input.id].name!==undefined){return;}                  //Skip this entry as it is duplicated
         IndexedNodes[input.id]= Object.assign(new Node(input.id),input,IndexedNodes[input.id]);                     // Initialize Current Node and assign input {id,name,parent_id}
         IndexedNodes[input.parent_id] = Object.assign(new Node(input.parent_id), IndexedNodes[input.parent_id],);   // Initialize Parent in case its not initialized
         if(typeof input.parent_id !== typeof 0){
