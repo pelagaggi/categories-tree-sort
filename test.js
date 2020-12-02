@@ -6,7 +6,7 @@ describe('# Sort Categories For Insert', function () {
   describe('#Example From bitbucket', function () {
     let Test_Input = [{ "name": "Accessories", "id": 1, "parent_id": 20 }, { "name": "Watches", "id": 57, "parent_id": 1 }, { "name": "Men", "id": 20, "parent_id": null }];
     let Expected_Result = [{ "name": "Men", "id": 20, "parent_id": null }, { "name": "Accessories", "id": 1, "parent_id": 20 }, { "name": "Watches", "id": 57, "parent_id": 1 }];
-    let result = sortCategoriesForInsert(Test_Input);
+    let result = JSON.parse(sortCategoriesForInsert(JSON.stringify(Test_Input)));
     it('Should return the same result as the example', function () {
       assert.deepEqual(result, Expected_Result);
     });
@@ -28,7 +28,7 @@ describe('# Sort Categories For Insert', function () {
   describe('#Undefined -> parent_id For Root Objects in Input', function () {
     let Test_Input = [{ "name": "Accessories", "id": 1, "parent_id": 20 }, { "name": "Watches", "id": 57, "parent_id": 1 }, { "name": "Men", "id": 20 }];
     let Expected_Result = [{ "name": "Men", "id": 20, "parent_id": null }, { "name": "Accessories", "id": 1, "parent_id": 20 }, { "name": "Watches", "id": 57, "parent_id": 1 }];
-    let result = sortCategoriesForInsert(Test_Input);
+    let result = JSON.parse(sortCategoriesForInsert(JSON.stringify(Test_Input)));
     it('Should Create Null parent_id for undefined Cases', function () {
       assert.deepEqual(result, Expected_Result);
     });
@@ -38,7 +38,7 @@ describe('# Sort Categories For Insert', function () {
       assert.equal(result_Stringified, Expected_Stringified);
     });
     it('Should have the parent node inserted before current node', function () {
-      let result = sortCategoriesForInsert(Test_Input);
+      let result = JSON.parse(sortCategoriesForInsert(Test_Input));
       let Inserted_IDs = [];
       result.forEach(input => {
         //Loop Result Array
@@ -47,7 +47,7 @@ describe('# Sort Categories For Insert', function () {
       })
     });
   });
-  describe('# BinaryTree Example [Binary Tree](https://www.tutorialspoint.com/data_structures_algorithms/images/binary_search_tree.jpg)', function () {
+  describe('# BinaryTree Example ![Binary Tree](images/binary_tree.png)', function () {
     let Test_Input = [
       { name: "D", id: 11, parent_id: 14 },
       { name: "B", id: 14, parent_id: 27 },
@@ -57,8 +57,8 @@ describe('# Sort Categories For Insert', function () {
       { name: "E", id: 35, parent_id: 27 },
       { name: "A", id: 27, parent_id: null }
     ];
-    let result = sortCategoriesForInsert(Test_Input);
-    it('Should have the parent node inserted before current node', function () {
+    let result = JSON.parse(sortCategoriesForInsert(JSON.stringify(Test_Input)));
+    it('Should have the parent node inserted before current node ( a child category cannot be inserted before its parent category)', function () {
       let Inserted_IDs = [];
       result.forEach(input => {   //Loop Result Array
         assert.equal((Inserted_IDs.indexOf(input.parent_id) >= 0) || input.parent_id === null, true); //Check if current is root or has parent inserted
@@ -105,9 +105,8 @@ describe('# Sort Categories For Insert', function () {
         { name: "L", id: 140, parent_id: 111 }];
       assert.equal((JSON.stringify(non_shuffled_data) !== JSON.stringify(Test_Input)), true);
     })
-    console.log(`Input:\t${JSON.stringify(Test_Input)}`);
-    let result = sortCategoriesForInsert(Test_Input);
-    it('Should have the parent node inserted before current node', function () {
+    let result = JSON.parse(sortCategoriesForInsert(JSON.stringify(Test_Input)));
+    it('Should have the parent node inserted before current node ( a child category cannot be inserted before its parent category)', function () {
       let Inserted_IDs = [];
       result.forEach(input => {   //Loop Result Array
         assert.equal((Inserted_IDs.indexOf(input.parent_id) >= 0) || input.parent_id === null, true); //Check if current is root or has parent inserted
@@ -156,9 +155,46 @@ describe('# Sort Categories For Insert', function () {
         { name: "L", id: 140, parent_id: 111 }];
       assert.equal((JSON.stringify(non_shuffled_data) !== JSON.stringify(Test_Input)), true);
     })
-    console.log(`Input:\t${JSON.stringify(Test_Input)}`);
-    let result = sortCategoriesForInsert(Test_Input);
-    it('Should have the parent node inserted before current node', function () {
+    let result = JSON.parse(sortCategoriesForInsert(JSON.stringify(Test_Input)));
+    it('Should have the parent node inserted before current node ( a child category cannot be inserted before its parent category)', function () {
+      let Inserted_IDs = [];
+      result.forEach(input => {   //Loop Result Array
+        assert.equal((Inserted_IDs.indexOf(input.parent_id) >= 0) || input.parent_id === null, true); //Check if current is root or has parent inserted
+        Inserted_IDs.push(input.id);
+      })
+    });
+    it('Should ignore duplicate nodes on Input', function () {
+      let Inserted_IDs = [];
+      result.forEach(input => {   //Loop Result Array
+        assert.equal((Inserted_IDs.indexOf(input.id) < 0), true); //Check if current is node has been inserted
+        Inserted_IDs.push(input.id);
+      })
+    });
+  });
+  describe('# Tens of thousands Random Trees input', function () {
+    let Test_Input = [];
+    let length = 100000;
+    for (x = 0; x < length; x++) {
+      let random = Math.floor(Math.random() * length);
+      let parent_id = Math.floor(Math.random() * 100) < 5 || random === x ? null : random;
+      Test_Input.push({
+        id:x,
+        name: randomString(4),
+        parent_id
+      })
+    }
+    
+    let startDate = new Date();
+    let result = JSON.parse(sortCategoriesForInsert(JSON.stringify(Test_Input)));
+    
+    let MsElapsed = ((new Date()) - startDate);
+    
+    it('Should not take too long to execute', function () {
+      console.log(`\t\tMsElapsed:\t${MsElapsed}`);
+      assert.equal((MsElapsed<5000), true); //Check if current is root or has parent inserted
+    });
+
+    it('Should have the parent node inserted before current node ( a child category cannot be inserted before its parent category)', function () {
       let Inserted_IDs = [];
       result.forEach(input => {   //Loop Result Array
         assert.equal((Inserted_IDs.indexOf(input.parent_id) >= 0) || input.parent_id === null, true); //Check if current is root or has parent inserted
@@ -176,6 +212,16 @@ describe('# Sort Categories For Insert', function () {
 
 
 });
+
+function randomString(length) {
+  var result = '';
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()_+=-';
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
 
 
 function shuffle(a) {

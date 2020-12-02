@@ -40,11 +40,15 @@ function Print(node){
 }
 module.exports = function sortCategoriesForInsert(inputJson){
     properJsonOutput = [], IndexedNodes =[], Trees=[];
-    OrderNodes(inputJson);
+    
+    //The test Description state that the input of the Function Will be an Object But also says that will be a String
+    if (typeof inputJson === typeof "String"){  //Identifying whether Parsing Input From String is necessary
+        inputJson = JSON.parse(inputJson)
+    }
+
+    OrderNodes(inputJson);  // Create Tree Indexation From Parsed Input String
     Trees.forEach(rootItem=>{
         Print(rootItem);
     })
-  // Your code happens...
-  ///   ... which calculates properJsonOutput
-  return properJsonOutput;
+  return JSON.stringify(properJsonOutput);
 }
