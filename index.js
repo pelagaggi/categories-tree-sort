@@ -13,7 +13,7 @@ function OrderNodes(inputs){
     for (var x=0; x < inputs.length; x++ ){
         let input = inputs[x];          //  Looping Variable for better code readability
     
-        if(IndexedNodes[input.id]!==undefined && IndexedNodes[input.id].name!==undefined){continue;}                //  Skip this entry as it is duplicated
+        if(IndexedNodes[input.id]!==undefined && IndexedNodes[input.id].name!==undefined){continue;}                //  Skip this entry as it is duplicated name can not be assigned by children
 
         IndexedNodes[input.id]= Object.assign(new Node(input.id),input,IndexedNodes[input.id]);                     //  Initialize Current Node and assign input {id,name,parent_id}
         
