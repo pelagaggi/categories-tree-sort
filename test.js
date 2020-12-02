@@ -34,7 +34,7 @@ describe('# Sort Categories For Insert', function () {
     let Test_Input = [
       { name: "D", id: 11, parent_id: 14 },
       { name: "B", id: 14, parent_id: 27 },
-      { name: "F", id: 31, paret_id: 35 },
+      { name: "F", id: 31, parent_id: 35 },
       { name: "C", id: 10, parent_id: 14 },
       { name: "G", id: 42, parent_id: 35 },
       { name: "E", id: 35, parent_id: 27 },
