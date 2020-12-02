@@ -1,4 +1,4 @@
-var properJsonOutput = [], orderedNodes = [],roots=[];
+var properJsonOutput = [], IndexedNodes = [],trees=[];
 
 class Node {
     constructor(id){
@@ -9,12 +9,12 @@ class Node {
 
 function OrderNodes(inputs){
     inputs.forEach(input=>{
-        orderedNodes[input.id]= Object.assign(new Node(input.id),input,orderedNodes[input.id]);                     // Initialize Current Node and assign input {id,name,parent_id}
-        orderedNodes[input.parent_id] = Object.assign(new Node(input.parent_id), orderedNodes[input.parent_id],);   // Initialize Parent in case its not initialized
+        IndexedNodes[input.id]= Object.assign(new Node(input.id),input,IndexedNodes[input.id]);                     // Initialize Current Node and assign input {id,name,parent_id}
+        IndexedNodes[input.parent_id] = Object.assign(new Node(input.parent_id), IndexedNodes[input.parent_id],);   // Initialize Parent in case its not initialized
         if(typeof input.parent_id !== typeof 0){
-            roots.push(orderedNodes[input.id]);
+            trees.push(IndexedNodes[input.id]);
         }else{
-            orderedNodes[input.parent_id].children.push(orderedNodes[input.id]);
+            IndexedNodes[input.parent_id].children.push(IndexedNodes[input.id]);
         }
     })
 }
@@ -25,9 +25,9 @@ function Print(node){
     node.children.forEach(child=>Print(child));
 }
 module.exports = function sortCategoriesForInsert(inputJson){
-    properJsonOutput = [], orderedNodes =[], roots=[];
+    properJsonOutput = [], IndexedNodes =[], trees=[];
     OrderNodes(inputJson);
-    roots.forEach(rootItem=>{
+    trees.forEach(rootItem=>{
         Print(rootItem);
     })
   // Your code happens...
