@@ -6,5 +6,12 @@
   "repository": "https://github.com/pelagaggi/categories-tree-sort",
   "author": "Alexandre R. Pelagaggi Nunes",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "global": "^4.4.0",
+    "mocha": "^8.2.1"
+  }
 }
