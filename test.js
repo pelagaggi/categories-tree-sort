@@ -22,7 +22,7 @@ describe('Sort Categories For Insert', function() {
             }
           ];
           let result = sortCategoriesForInsert(test);
-          let expected = JSON.stringify([
+          let expected = [
             {
               "name": "Men",
               "id": 20,
@@ -38,9 +38,9 @@ describe('Sort Categories For Insert', function() {
               "id": 57,
               "parent_id": 1
             }
-          ])
+          ]
 
-      assert.equal(expected,result);
+      assert.deepEqual(expected,result);
     });
   });
 });
