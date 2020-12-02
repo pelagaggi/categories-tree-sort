@@ -20,8 +20,8 @@ function OrderNodes(inputs){
 }
 
 function Print(node){
-    let {id,name,parent_id} = node;
-    result.push({id,name,parent_id});
+    let {name,id,parent_id} = node;
+    result.push({name,id,parent_id});
     node.childreen.forEach(child=>Print(child));
 }
 module.exports = function sortCategoriesForInsert(inputJson){
