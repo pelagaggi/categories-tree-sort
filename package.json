@@ -1,0 +1,10 @@
+{
+  "name": "categories-tree-sort",
+  "version": "1.0.0",
+  "description": "Categories Tree Sort Challenge for csc generation Software Engineer position",
+  "main": "index.js",
+  "repository": "https://github.com/pelagaggi/categories-tree-sort",
+  "author": "Alexandre R. Pelagaggi Nunes",
+  "license": "MIT",
+  "private": false
+}
